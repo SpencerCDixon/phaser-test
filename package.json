@@ -20,10 +20,10 @@
     "game",
     "phaser.io"
   ],
-  "author": "Andy Wong",
+  "author": "Spencer Dixon",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alacritythief/super-cat-wizard/issues"
+    "url": "https://github.com/spencercdixon/phaser-test/issues"
   },
-  "homepage": "https://github.com/alacritythief/super-cat-wizard"
+  "homepage": "https://github.com/spencercdixon/phaser-test"
 }
