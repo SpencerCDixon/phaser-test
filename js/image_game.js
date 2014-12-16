@@ -7,7 +7,11 @@ function preload() {
   game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 }
 
+  var score = 0;
+  var scoreText;
 function create() {
+
+  cursors = game.input.keyboard.createCursorKeys();
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -30,10 +34,31 @@ function create() {
   player.body.collideWorldBounds = true;
   player.animations.add('left', [0, 1, 2, 3], 10, true);
   player.animations.add('right', [5, 6, 7, 8], 10, true);
+
+  // stars
+  stars = game.add.group();
+
+  stars.enableBody = true;
+
+  for (var i = 0; i < 12; i++)
+  {
+    //  Create a star inside of the 'stars' group
+    var star = stars.create(i * 70, 0, 'star');
+
+    //  Let gravity do its thing
+    star.body.gravity.y = 6;
+
+    //  This just gives each star a slightly random bounce value
+    star.body.bounce.y = 0.7 + Math.random() * 0.2;
+  }
+  scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 }
 
 function update() {
-
+    // game.physics.arcade.collide(stars, platforms);
+    // game.physics.arcade.overlap(player, stars, collectStar, null, this);
+    game.physics.arcade.collide(stars, platforms);
+    game.physics.arcade.overlap(player, stars, collectStar, null, this);
     game.physics.arcade.collide(player, platforms);
     player.body.velocity.x = 0;
 
@@ -54,6 +79,12 @@ function update() {
     }
     if (cursors.up.isDown && player.body.touching.down)
     {
-      player.body.velocity.y = -350;
+      player.body.velocity.y = -450;
     }
+}
+
+function collectStar (player, star) {
+  star.kill();
+  score += 10;
+  scoreText.text = 'Score: ' + score;
 }
